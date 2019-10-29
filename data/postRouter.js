@@ -18,4 +18,32 @@ router.get('/', (req, res) => {
         });
 });
 
+router.post('/', (req, res) => {
+    const thing = req.body;
+    Posts.insert(thing)
+        .then(posts => {
+            res.status(201).json(posts)
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({
+                message: 'Error creating new post'
+            })
+        })
+});
+
+router.get('/:id', (req, res) => {
+    const id = req.params.id;
+    Posts.findById(id)
+        .then(posts => {
+            res.status(200).json(posts)
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({
+                message: 'Error retrieving the post by id'
+            })
+        })
+});
+
 module.exports = router;
