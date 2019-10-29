@@ -58,6 +58,19 @@ router.delete('/:id', (req, res) => {
                 message: 'Error deleting the post by id'
             })
         })
+});
+
+router.put('/:id', (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+    Posts.update(id, body)
+        .then(posts => {
+            res.status(200).json(posts);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({message: `Error updating the post by id ${id}`})
+        })
 })
 
 module.exports = router;
