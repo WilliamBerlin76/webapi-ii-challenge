@@ -50,7 +50,7 @@ router.delete('/:id', (req, res) => {
     const id = req.params.id;
     Posts.remove(id)
         .then(posts => {
-            res.status(200).json({message: `post with the id ${id} was deleted`})
+            res.status(203).json({message: `post with the id ${id} was deleted`})
         })
         .catch(err => {
             console.log(err);
@@ -70,6 +70,20 @@ router.put('/:id', (req, res) => {
         .catch(err => {
             console.log(err);
             res.status(500).json({message: `Error updating the post by id ${id}`})
+        })
+});
+
+/////////////////////////Requests involving comments below////////////////////////////////////////////////////
+
+router.get('/:id/comments', (req, res) => {
+    const postId = req.params.id;
+    Posts.findPostComments(postId)
+        .then(comments => {
+            res.status(200).json(comments);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({message: `Error getting the comments from post id ${postId}`})
         })
 })
 
