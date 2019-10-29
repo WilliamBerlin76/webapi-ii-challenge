@@ -85,6 +85,19 @@ router.get('/:id/comments', (req, res) => {
             console.log(err);
             res.status(500).json({message: `Error getting the comments from post id ${postId}`})
         })
+});
+
+router.post('/:id/comments', (req, res) => {
+    const postId = req.params.id;
+    const comment = req.body;
+    Posts.insertComment(comment)
+        .then(comments => {
+            res.status(201).json(comments)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({message: `Error adding a comment to post id ${postId}`})
+        })
 })
 
 module.exports = router;
