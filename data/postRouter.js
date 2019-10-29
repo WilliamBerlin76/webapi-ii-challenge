@@ -46,4 +46,18 @@ router.get('/:id', (req, res) => {
         })
 });
 
+router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    Posts.remove(id)
+        .then(posts => {
+            res.status(200).json({message: `post with the id ${id} was deleted`})
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                message: 'Error deleting the post by id'
+            })
+        })
+})
+
 module.exports = router;
